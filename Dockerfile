@@ -1,25 +1,25 @@
 # syntax=docker/dockerfile:1
 
 ## Build
-FROM golang:1.18-alpine AS build
+FROM golang:1.18 AS build
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY go.* ./
-RUN go mod download
+# go.sum
+COPY go.mod ./
 
-#COPY static /static
+RUN go mod download && go mod verify
 
-COPY *.go ./
+COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o site
+RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o site
 
 ## Deploy
 FROM gcr.io/distroless/base-debian10
 
 WORKDIR /
 
-COPY --from=build app/site /site
+COPY --from=build /usr/src/app/site /site
 COPY static /static
 
 EXPOSE 8080
