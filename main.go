@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	f := NewFileHandler("./static")
-	http.HandleFunc("/", f.handle)
+	f := NewIndexHandler("./static")
+	http.HandleFunc("/", f.handleIndex)
 
 	port := os.Getenv("PORT")
 	if port == "" {
