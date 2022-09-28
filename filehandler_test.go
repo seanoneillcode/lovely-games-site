@@ -8,7 +8,7 @@ import (
 
 func TestHelloHandler(t *testing.T) {
 
-	f := NewFileHandler("./static")
+	f := NewIndexHandler("./static")
 	req := httptest.NewRequest("GET", "/", nil)
 	rr := httptest.NewRecorder()
 
@@ -24,11 +24,11 @@ func TestHelloHandler(t *testing.T) {
 
 func TestFileHandler(t *testing.T) {
 
-	f := NewFileHandler("./static")
+	f := NewIndexHandler("./static")
 	req := httptest.NewRequest("GET", "/", nil)
 	rr := httptest.NewRecorder()
 
-	f.handle(rr, req)
+	f.handleIndex(rr, req)
 
 	got := rr.Body.String()
 	want := "<title>A static page</title>"

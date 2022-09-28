@@ -5,20 +5,20 @@ import (
 	"net/http"
 )
 
-type fileHandler struct {
+type indexHandler struct {
 	handler http.Handler
 }
 
-func NewFileHandler(dir string) *fileHandler {
-	return &fileHandler{
+func NewIndexHandler(dir string) *indexHandler {
+	return &indexHandler{
 		handler: http.FileServer(http.Dir(dir)),
 	}
 }
 
-func (f *fileHandler) handle(w http.ResponseWriter, r *http.Request) {
+func (f *indexHandler) handleIndex(w http.ResponseWriter, r *http.Request) {
 	f.handler.ServeHTTP(w, r)
 }
 
-func (f *fileHandler) handleHello(w http.ResponseWriter, r *http.Request) {
+func (f *indexHandler) handleHello(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello bob!\n")
 }
