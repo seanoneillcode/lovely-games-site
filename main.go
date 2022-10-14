@@ -1,17 +1,23 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 	"os"
 
-	"seanoneillcode/lovely-games-site/html"
+	"seanoneillcode/lovely-games-site/handlers"
 )
 
 func main() {
 
-	http.HandleFunc("/", index)
-	http.HandleFunc("/about", about)
+	isDevelopmentMode := flag.Bool("dev", false, "set to true for local development")
+	flag.Parse()
+
+	render := handlers.NewRenderHandlers(*isDevelopmentMode)
+
+	http.HandleFunc("/", render.Index)
+	http.HandleFunc("/about", render.About)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
@@ -23,18 +29,4 @@ func main() {
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatal(err)
 	}
-}
-
-func about(w http.ResponseWriter, r *http.Request) {
-	p := html.AboutParams{
-		Title: "About",
-	}
-	html.About(w, p)
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-	p := html.IndexParams{
-		Title: "Index",
-	}
-	html.Index(w, p)
 }

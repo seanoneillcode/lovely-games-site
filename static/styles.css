@@ -1,3 +1,15 @@
 body {
-    color: #c0392b
+    font-family: Helvetica, sans-serif;
+}
+
+section {
+    margin-left: auto;
+    margin-right: auto;
+    width: 780px;
+}
+
+h1 {
+    font-weight: bold;
+    margin: 0 0 auto;
+    color: #000000;
 }
