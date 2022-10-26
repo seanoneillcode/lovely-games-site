@@ -141,7 +141,42 @@ func (h *GameHandler) UploadGame(w http.ResponseWriter, r *http.Request) {
 	default:
 		common.HandleError(errors.New("unsupported method"), w, r, http.StatusBadRequest)
 	}
+}
 
+func (h *GameHandler) EditGame(w http.ResponseWriter, r *http.Request) {
+
+	switch r.Method {
+	case "GET":
+		data := map[string]interface{}{
+			"Title": "Edit Game",
+		}
+		err := h.templates.GetWrappedTemplate("games/edit.html").Execute(w, data)
+		if err != nil {
+			common.HandleError(err, w, r, http.StatusInternalServerError)
+		}
+	case "POST":
+		err := r.ParseMultipartForm(32 << 20)
+		if err != nil {
+			common.HandleError(err, w, r, http.StatusBadRequest)
+			return
+		}
+		id := common.GetQueryParam("id", r.URL)
+		name := r.FormValue("game-name")
+		description := r.FormValue("game-description")
+
+		game := Game{
+			Name:        name,
+			Description: description,
+		}
+		err = h.repository.EditGame(id, &game)
+		if err != nil {
+			common.HandleError(err, w, r, http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/games", http.StatusSeeOther)
+	default:
+		common.HandleError(errors.New("unsupported method"), w, r, http.StatusBadRequest)
+	}
 }
 
 func (h *GameHandler) Play(w http.ResponseWriter, r *http.Request) {

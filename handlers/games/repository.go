@@ -45,3 +45,17 @@ func (r *Repository) AddGame(game *Game) error {
 	games = append(games, game)
 	return nil
 }
+
+func (r *Repository) EditGame(id string, game *Game) error {
+	for _, g := range games {
+		if g.Id == id {
+			g.Name = game.Name
+			g.Description = game.Description
+			g.ReleaseState = game.ReleaseState
+			//g.Screenshot = game.Screenshot
+			//g.GameFile = game.GameFile
+			return nil
+		}
+	}
+	return nil
+}
