@@ -10,8 +10,8 @@ func (s *RenderHandlers) About(w http.ResponseWriter, r *http.Request) {
 	data := map[string]interface{}{
 		"Title": "About",
 	}
-	err := s.Templates.GetTemplate("about/about.html").Execute(w, data)
+	err := s.Templates.GetTemplate("about.html").Execute(w, data)
 	if err != nil {
-		common.HandleError(err, w, r)
+		common.HandleError(err, w, r, http.StatusInternalServerError)
 	}
 }

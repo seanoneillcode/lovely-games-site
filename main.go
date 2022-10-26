@@ -23,7 +23,8 @@ func main() {
 
 	http.HandleFunc("/", render.Index)
 	http.HandleFunc("/about", render.About)
-	http.HandleFunc("/games", gameHandler.Games)
+	http.HandleFunc("/games", gameHandler.ListGames)
+	http.HandleFunc("/games/upload", gameHandler.UploadGame)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 

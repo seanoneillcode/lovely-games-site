@@ -12,6 +12,6 @@ func (s *RenderHandlers) Index(w http.ResponseWriter, r *http.Request) {
 	}
 	err := s.Templates.GetTemplate("index.html").Execute(w, data)
 	if err != nil {
-		common.HandleError(err, w, r)
+		common.HandleError(err, w, r, http.StatusInternalServerError)
 	}
 }
