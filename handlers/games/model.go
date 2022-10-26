@@ -6,4 +6,5 @@ type Game struct {
 	Description  string
 	Screenshot   string
 	ReleaseState string // unreleased, restricted, released
+	GameFile     string
 }

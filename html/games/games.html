@@ -13,7 +13,9 @@
 
         <p>{{ .Description }}</p>
 
-        <img loading="lazy" width="350" height="200" src="{{ .Screenshot }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
+        <a href="/games/play?id={{ .Id }}">
+            <img loading="lazy" width="400" height="320" src="/static/screenshots/{{ .Screenshot }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
+        </a>
 
         <br />
     </div>
