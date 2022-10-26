@@ -2,18 +2,16 @@ package handlers
 
 import (
 	"net/http"
+
+	"seanoneillcode/lovely-games-site/handlers/common"
 )
 
-type AboutParams struct {
-	Title string
-}
-
 func (s *RenderHandlers) About(w http.ResponseWriter, r *http.Request) {
-	p := AboutParams{
-		Title: "About",
+	data := map[string]interface{}{
+		"Title": "About",
 	}
-	err := s.Templates.GetTemplate("about/about.html").Execute(w, p)
+	err := s.Templates.GetTemplate("about/about.html").Execute(w, data)
 	if err != nil {
-		panic(err)
+		common.HandleError(err, w, r)
 	}
 }

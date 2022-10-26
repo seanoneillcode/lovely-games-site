@@ -1,6 +1,8 @@
 package handlers
 
-import "seanoneillcode/lovely-games-site/html"
+import (
+	"seanoneillcode/lovely-games-site/html"
+)
 
 type RenderHandlers struct {
 	Templates *html.Templates
