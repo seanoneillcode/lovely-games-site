@@ -7,6 +7,8 @@ import (
 	"os"
 
 	"seanoneillcode/lovely-games-site/handlers"
+	"seanoneillcode/lovely-games-site/handlers/games"
+	"seanoneillcode/lovely-games-site/html"
 )
 
 func main() {
@@ -15,9 +17,13 @@ func main() {
 	flag.Parse()
 
 	render := handlers.NewRenderHandlers(*isDevelopmentMode)
+	templates := html.NewTemplates(*isDevelopmentMode)
+
+	gameHandler := games.NewGameHandler(templates, games.NewRepository())
 
 	http.HandleFunc("/", render.Index)
 	http.HandleFunc("/about", render.About)
+	http.HandleFunc("/games", gameHandler.Games)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
