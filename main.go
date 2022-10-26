@@ -23,6 +23,7 @@ func main() {
 
 	http.HandleFunc("/", render.Index)
 	http.HandleFunc("/about", render.About)
+	http.HandleFunc("/play", render.Play)
 	http.HandleFunc("/games", gameHandler.ListGames)
 	http.HandleFunc("/games/upload", gameHandler.UploadGame)
 
