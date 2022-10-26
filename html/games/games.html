@@ -1,0 +1,25 @@
+{{define "content"}}
+<h1>Games</h1>
+<br>
+<p>
+    <a href="/games/upload">Upload A New Game</a>
+</p>
+<br>
+
+{{ range $i, $j := .Games }}
+<article class="">
+    <div class="desc" id="{{ .Id }}" data-toggle="off">
+        <h3>{{ .Name }}</h3>
+
+        <p>{{ .Description }}</p>
+
+        <a href="/games/play?id={{ .Id }}">
+            <img loading="lazy" width="400" height="320" src="/static/screenshots/{{ .Screenshot }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
+        </a>
+
+        <br />
+    </div>
+</article>
+{{ end }}
+
+{{end}}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>{{.Title}}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/games">Games</a>
+    </nav>
+  </header>
+  <section>
+{{block "content" .}}{{end}}
+  </section>
+  <footer></footer>
+</body>
+</html>

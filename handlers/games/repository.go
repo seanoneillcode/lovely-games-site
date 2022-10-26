@@ -1,5 +1,7 @@
 package games
 
+import "errors"
+
 type Repository struct {
 }
 
@@ -7,32 +9,53 @@ func NewRepository() *Repository {
 	return &Repository{}
 }
 
-var games = []Game{
+var games = []*Game{
 	{
-		Id:          "0",
-		Name:        "Wolfenstein",
-		Description: "A raycast FPS - shoot nazis and their dogs in a tiled maze",
-		Screenshot:  "wolfenstein.png",
+		Id:           "3489fhjbef",
+		Name:         "2048",
+		Description:  "A puzzle game where the tiles must add up.",
+		Screenshot:   "86hrusuwnv84kshg.png",
+		GameFile:     "game-2048.wasm",
+		ReleaseState: "released",
 	},
 	{
-		Id:          "1",
-		Name:        "Doom",
-		Description: "FPS - shoot demons and their demons. ",
-		Screenshot:  "doom.png",
-	},
-	{
-		Id:          "2",
-		Name:        "Super Mario Bros",
-		Description: "stomp on creatures",
-		Screenshot:  "super-mario.png",
+		Id:           "hd74hsndkghd",
+		Name:         "Flappy",
+		Description:  "Fly past the pipes using a bird.",
+		Screenshot:   "BpLnfgDsc2WD8F2q.png",
+		GameFile:     "NfHK5a84jjJkwzDk.wasm",
+		ReleaseState: "released",
 	},
 }
 
-func (r *Repository) GetGames() ([]Game, error) {
+func (r *Repository) GetGames() ([]*Game, error) {
 	return games, nil
 }
 
-func (r *Repository) AddGame(game Game) error {
+func (r *Repository) GetGame(id string) (*Game, error) {
+	for _, v := range games {
+		if v.Id == id {
+			return v, nil
+		}
+	}
+	return nil, errors.New("game with id not found: " + id)
+}
+
+func (r *Repository) AddGame(game *Game) error {
 	games = append(games, game)
+	return nil
+}
+
+func (r *Repository) EditGame(id string, game *Game) error {
+	for _, g := range games {
+		if g.Id == id {
+			g.Name = game.Name
+			g.Description = game.Description
+			g.ReleaseState = game.ReleaseState
+			//g.Screenshot = game.Screenshot
+			//g.GameFile = game.GameFile
+			return nil
+		}
+	}
 	return nil
 }

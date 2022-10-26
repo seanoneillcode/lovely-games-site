@@ -22,8 +22,10 @@ func main() {
 	gameHandler := games.NewGameHandler(templates, games.NewRepository())
 
 	http.HandleFunc("/", render.Index)
-	http.HandleFunc("/about", render.About)
-	http.HandleFunc("/games", gameHandler.Games)
+	http.HandleFunc("/games", gameHandler.ListGames)
+	http.HandleFunc("/games/play", gameHandler.Play)
+	http.HandleFunc("/games/upload", gameHandler.UploadGame)
+	http.HandleFunc("/games/frame", gameHandler.GameFrame)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 

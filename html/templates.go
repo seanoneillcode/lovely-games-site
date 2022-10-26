@@ -21,16 +21,31 @@ func NewTemplates(isDevelopmentMode bool) *Templates {
 	}
 }
 
-func (r *Templates) GetTemplate(file string) *template.Template {
+func (r *Templates) GetWrappedTemplate(file string) *template.Template {
 	// in development mode, we want to load the file everytime in case it's changed.
 	if r.isDevelopmentMode {
-		return template.Must(template.ParseFiles("html/layout.html", fmt.Sprintf("html/%s", file)))
+		return template.Must(template.ParseFiles("html/wrapper.html", fmt.Sprintf("html/%s", file)))
 	}
 
 	// cache the templates to save ms and kb
 	tmpl, ok := r.templatesCache[file]
 	if !ok {
-		tmpl = template.Must(template.New("layout.html").ParseFS(files, "layout.html", file))
+		tmpl = template.Must(template.New("wrapper.html").ParseFS(files, "wrapper.html", file))
+		r.templatesCache[file] = tmpl
+	}
+	return tmpl
+}
+
+func (r *Templates) GetTemplate(file string) *template.Template {
+	// in development mode, we want to load the file everytime in case it's changed.
+	if r.isDevelopmentMode {
+		return template.Must(template.ParseFiles(fmt.Sprintf("html/%s", file)))
+	}
+
+	// cache the templates to save ms and kb
+	tmpl, ok := r.templatesCache[file]
+	if !ok {
+		tmpl = template.Must(template.New("tmp").ParseFS(files, file))
 		r.templatesCache[file] = tmpl
 	}
 	return tmpl
