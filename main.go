@@ -3,9 +3,12 @@ package main
 import (
 	"flag"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
+	"time"
 
+	"seanoneillcode/lovely-games-site/database"
 	"seanoneillcode/lovely-games-site/handlers"
 	"seanoneillcode/lovely-games-site/handlers/games"
 	"seanoneillcode/lovely-games-site/html"
@@ -13,13 +16,21 @@ import (
 
 func main() {
 
+	rand.Seed(time.Now().Unix())
+
+	// Development mode flag is used to return embedded resources or read them from file system every request.
 	isDevelopmentMode := flag.Bool("dev", false, "set to true for local development")
 	flag.Parse()
 
+	conn, err := database.GetDbConn()
+	if err != nil {
+		log.Fatalf("unable to connect to postgres: %v", err)
+	}
+	defer conn.Close()
+
 	render := handlers.NewRenderHandlers(*isDevelopmentMode)
 	templates := html.NewTemplates(*isDevelopmentMode)
-
-	gameHandler := games.NewGameHandler(templates, games.NewRepository())
+	gameHandler := games.NewGameHandler(templates, games.NewRepository(conn))
 
 	http.HandleFunc("/", render.Index)
 	http.HandleFunc("/games", gameHandler.ListGames)

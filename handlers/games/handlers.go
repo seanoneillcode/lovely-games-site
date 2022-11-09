@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 
 	"seanoneillcode/lovely-games-site/handlers/common"
 	"seanoneillcode/lovely-games-site/html"
@@ -83,6 +84,14 @@ func (h *GameHandler) UploadGame(w http.ResponseWriter, r *http.Request) {
 		}
 		name := r.FormValue("game-name")
 		description := r.FormValue("game-description")
+		frameWidth, err := strconv.Atoi(r.FormValue("game-frame-width"))
+		if err != nil {
+			frameWidth = 480
+		}
+		frameHeight, err := strconv.Atoi(r.FormValue("game-frame-height"))
+		if err != nil {
+			frameHeight = 360
+		}
 		formScreenshotFile, _, err := r.FormFile("game-screenshot")
 		if err != nil {
 			common.HandleError(err, w, r, http.StatusInternalServerError)
@@ -131,6 +140,8 @@ func (h *GameHandler) UploadGame(w http.ResponseWriter, r *http.Request) {
 			Description: description,
 			Screenshot:  screenshotFilename,
 			GameFile:    formGameFileFilename,
+			FrameWidth:  frameWidth,
+			FrameHeight: frameHeight,
 		}
 		err = h.repository.AddGame(&game)
 		if err != nil {
