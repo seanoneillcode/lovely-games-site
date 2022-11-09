@@ -11,20 +11,24 @@ func NewRepository() *Repository {
 
 var games = []*Game{
 	{
+		Id:           "587sdnre86dh",
+		Name:         "Pluto's Revenge",
+		Description:  "Blast away invaders from Pluto.",
+		Screenshot:   "VbhV3vC5AWX39IVU.png",
+		GameFile:     "WSP2NcHciWvqZTa2.wasm",
+		ReleaseState: "released",
+		FrameWidth:   720,
+		FrameHeight:  960,
+	},
+	{
 		Id:           "3489fhjbef",
 		Name:         "2048",
 		Description:  "A puzzle game where the tiles must add up.",
 		Screenshot:   "86hrusuwnv84kshg.png",
-		GameFile:     "game-2048.wasm",
+		GameFile:     "86hrusuwnv84kshg.wasm",
 		ReleaseState: "released",
-	},
-	{
-		Id:           "hd74hsndkghd",
-		Name:         "Flappy",
-		Description:  "Fly past the pipes using a bird.",
-		Screenshot:   "BpLnfgDsc2WD8F2q.png",
-		GameFile:     "NfHK5a84jjJkwzDk.wasm",
-		ReleaseState: "released",
+		FrameWidth:   420,
+		FrameHeight:  600,
 	},
 }
 

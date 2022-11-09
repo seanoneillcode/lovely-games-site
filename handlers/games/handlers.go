@@ -180,11 +180,25 @@ func (h *GameHandler) EditGame(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *GameHandler) Play(w http.ResponseWriter, r *http.Request) {
-	data := map[string]interface{}{
-		"Title": "Play",
-		"Id":    common.GetQueryParam("id", r.URL),
+	id := common.GetQueryParam("id", r.URL)
+
+	game, err := h.repository.GetGame(id)
+	if err != nil {
+		common.HandleError(err, w, r, http.StatusBadRequest)
+		return
 	}
-	err := h.templates.GetWrappedTemplate("games/play.html").Execute(w, data)
+	if game == nil {
+		common.HandleError(err, w, r, http.StatusBadRequest)
+		return
+	}
+
+	data := map[string]interface{}{
+		"Title":       "Play",
+		"Id":          id,
+		"FrameWidth":  game.FrameWidth,
+		"FrameHeight": game.FrameHeight,
+	}
+	err = h.templates.GetWrappedTemplate("games/play.html").Execute(w, data)
 	if err != nil {
 		common.HandleError(err, w, r, http.StatusInternalServerError)
 	}
