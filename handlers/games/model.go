@@ -7,4 +7,6 @@ type Game struct {
 	Screenshot   string
 	ReleaseState string // unreleased, restricted, released
 	GameFile     string
+	FrameWidth   int
+	FrameHeight  int
 }
