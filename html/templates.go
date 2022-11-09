@@ -3,6 +3,7 @@ package html
 import (
 	"embed"
 	"fmt"
+	"path"
 	"text/template"
 )
 
@@ -45,7 +46,8 @@ func (r *Templates) GetTemplate(file string) *template.Template {
 	// cache the templates to save ms and kb
 	tmpl, ok := r.templatesCache[file]
 	if !ok {
-		tmpl = template.Must(template.New("tmp").ParseFS(files, file))
+		name := path.Base(file)
+		tmpl = template.Must(template.New(name).ParseFS(files, file))
 		r.templatesCache[file] = tmpl
 	}
 	return tmpl
