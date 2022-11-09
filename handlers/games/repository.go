@@ -1,65 +1,78 @@
 package games
 
-import "errors"
+import (
+	"database/sql"
+)
 
 type Repository struct {
+	db *sql.DB
 }
 
-func NewRepository() *Repository {
-	return &Repository{}
-}
-
-var games = []*Game{
-	{
-		Id:           "587sdnre86dh",
-		Name:         "Pluto's Revenge",
-		Description:  "Blast away invaders from Pluto.",
-		Screenshot:   "VbhV3vC5AWX39IVU.png",
-		GameFile:     "WSP2NcHciWvqZTa2.wasm",
-		ReleaseState: "released",
-		FrameWidth:   720,
-		FrameHeight:  960,
-	},
-	{
-		Id:           "3489fhjbef",
-		Name:         "2048",
-		Description:  "A puzzle game where the tiles must add up.",
-		Screenshot:   "86hrusuwnv84kshg.png",
-		GameFile:     "86hrusuwnv84kshg.wasm",
-		ReleaseState: "released",
-		FrameWidth:   420,
-		FrameHeight:  600,
-	},
+func NewRepository(db *sql.DB) *Repository {
+	return &Repository{
+		db: db,
+	}
 }
 
 func (r *Repository) GetGames() ([]*Game, error) {
-	return games, nil
+	const limit = 10
+	var allGames []*Game
+
+	q := `SELECT id, title, description, screenshot, game_file, frame_width, frame_height FROM games limit $1`
+	rows, err := r.db.Query(q, limit)
+	if err != nil {
+		return allGames, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		game := &Game{}
+		err = rows.Scan(
+			&game.Id,
+			&game.Name,
+			&game.Description,
+			&game.Screenshot,
+			&game.GameFile,
+			&game.FrameWidth,
+			&game.FrameHeight,
+		)
+		if err != nil {
+			return allGames, err
+		}
+		allGames = append(allGames, game)
+	}
+
+	return allGames, nil
 }
 
 func (r *Repository) GetGame(id string) (*Game, error) {
-	for _, v := range games {
-		if v.Id == id {
-			return v, nil
-		}
+	q := `SELECT id, title, description, screenshot, game_file, frame_width, frame_height FROM games WHERE id = $1`
+	row := r.db.QueryRow(q, id)
+	game := &Game{}
+	err := row.Scan(
+		&game.Id,
+		&game.Name,
+		&game.Description,
+		&game.Screenshot,
+		&game.GameFile,
+		&game.FrameWidth,
+		&game.FrameHeight,
+	)
+	if err != nil {
+		return game, err
 	}
-	return nil, errors.New("game with id not found: " + id)
+
+	return game, nil
 }
 
 func (r *Repository) AddGame(game *Game) error {
-	games = append(games, game)
-	return nil
+	v := `INSERT INTO games (id, title, description, screenshot, game_file, frame_width, frame_height, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())`
+	_, err := r.db.Exec(v, game.Id, game.Name, game.Description, game.Screenshot, game.GameFile, game.FrameWidth, game.FrameHeight)
+	return err
 }
 
 func (r *Repository) EditGame(id string, game *Game) error {
-	for _, g := range games {
-		if g.Id == id {
-			g.Name = game.Name
-			g.Description = game.Description
-			g.ReleaseState = game.ReleaseState
-			//g.Screenshot = game.Screenshot
-			//g.GameFile = game.GameFile
-			return nil
-		}
-	}
-	return nil
+	v := `UPDATE games SET title = $1, description = $2, screenshot = $3, game_file = $4, frame_width = $5,frame_height = $6,updated_at = NOW() WHERE id = $7`
+	_, err := r.db.Exec(v, game.Name, game.Description, game.Screenshot, game.GameFile, game.FrameWidth, game.FrameHeight, id)
+	return err
 }
