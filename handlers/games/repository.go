@@ -1,24 +1,38 @@
 package games
 
+import (
+	"github.com/gomarkdown/markdown"
+	"os"
+)
+
 type Repository struct {
 	games []*Game
 }
 
 func NewRepository() *Repository {
-	return &Repository{
-		games: []*Game{
-			{
-				Id:           "587sdnre86dh",
-				Name:         "Plutos Revenge",
-				Description:  "Blast away invaders from Pluto.",
-				Screenshot:   "VbhV3vC5AWX39IVU.png",
-				ReleaseState: "Released",
-				GameFile:     "WSP2NcHciWvqZTa2.wasm",
-				FrameWidth:   720,
-				FrameHeight:  960,
-			},
-		},
+	r := &Repository{games: []*Game{}}
+	g := &Game{
+		Id:               "587sdnre86dh",
+		Name:             "Plutos Revenge",
+		ShortDescription: "Blast away invaders from Pluto.",
+		DescriptionFile:  "description.md",
+
+		Screenshot:   "screenshot.png",
+		HeaderImage:  "header.png",
+		ReleaseState: "Released",
+		GameFile:     "game.wasm",
+		FrameWidth:   720,
+		FrameHeight:  960,
 	}
+	data, err := os.ReadFile("static/" + g.Id + "/" + g.DescriptionFile)
+	if err != nil {
+		panic(err)
+	}
+	g.Description = string(markdown.ToHTML(data, nil, nil))
+
+	r.games = append(r.games, g)
+
+	return r
 }
 
 func (r *Repository) GetGames() []*Game {

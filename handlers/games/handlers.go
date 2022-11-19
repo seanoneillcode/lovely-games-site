@@ -45,7 +45,7 @@ func (h *GameHandler) GameFrame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := map[string]interface{}{
-		"GameFile": game.GameFile,
+		"Game": game,
 	}
 	err := h.templates.GetTemplate("games/frame.html").Execute(w, data)
 	if err != nil {
@@ -63,12 +63,8 @@ func (h *GameHandler) Play(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := map[string]interface{}{
-		"Title":       "Play",
-		"Id":          id,
-		"FrameWidth":  game.FrameWidth,
-		"FrameHeight": game.FrameHeight,
-		"Screenshot":  game.Screenshot,
-		"Name":        game.Name,
+		"Title": "Play",
+		"Game":  game,
 	}
 	err := h.templates.GetWrappedTemplate("games/play.html").Execute(w, data)
 	if err != nil {

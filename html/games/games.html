@@ -2,18 +2,12 @@
 <h1>Games</h1>
 
 {{ range $i, $j := .Games }}
-<article class="">
-    <div class="desc" id="{{ .Id }}" data-toggle="off">
-        <h3>{{ .Name }}</h3>
 
-        <p>{{ .Description }}</p>
+<article >
 
-        <a href="/games/play?id={{ .Id }}">
-            <img loading="lazy" width="400" height="320" src="/static/screenshots/{{ .Screenshot }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
-        </a>
-
-        <br />
-    </div>
+    <h3>{{ .Name }}</h3>
+    <p>{{ .ShortDescription }}</p>
+    <a class="button view-button" href="/games/play?id={{ .Id }}">View</a>
 </article>
 {{ end }}
 

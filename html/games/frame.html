@@ -15,7 +15,7 @@
     }
 
     const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("/static/games/{{ .GameFile }}"), go.importObject).then(result => {
+    WebAssembly.instantiateStreaming(fetch("/static/{{ .Game.Id }}/{{ .Game.GameFile }}"), go.importObject).then(result => {
         go.run(result.instance);
     });
 </script>

@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
@@ -20,6 +21,10 @@ func main() {
 	// Development mode flag is used to return embedded resources or read them from file system every request.
 	isDevelopmentMode := flag.Bool("dev", false, "set to true for local development")
 	flag.Parse()
+
+	if *isDevelopmentMode {
+		fmt.Println("running in dev mode")
+	}
 
 	render := handlers.NewRenderHandlers(*isDevelopmentMode)
 	templates := html.NewTemplates(*isDevelopmentMode)
