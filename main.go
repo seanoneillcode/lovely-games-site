@@ -8,7 +8,6 @@ import (
 	"os"
 	"time"
 
-	"seanoneillcode/lovely-games-site/database"
 	"seanoneillcode/lovely-games-site/handlers"
 	"seanoneillcode/lovely-games-site/handlers/games"
 	"seanoneillcode/lovely-games-site/html"
@@ -22,20 +21,13 @@ func main() {
 	isDevelopmentMode := flag.Bool("dev", false, "set to true for local development")
 	flag.Parse()
 
-	conn, err := database.GetDbConn()
-	if err != nil {
-		log.Fatalf("unable to connect to postgres: %v", err)
-	}
-	defer conn.Close()
-
 	render := handlers.NewRenderHandlers(*isDevelopmentMode)
 	templates := html.NewTemplates(*isDevelopmentMode)
-	gameHandler := games.NewGameHandler(templates, games.NewRepository(conn))
+	gameHandler := games.NewGameHandler(templates, games.NewRepository())
 
 	http.HandleFunc("/", render.Index)
 	http.HandleFunc("/games", gameHandler.ListGames)
 	http.HandleFunc("/games/play", gameHandler.Play)
-	http.HandleFunc("/games/upload", gameHandler.UploadGame)
 	http.HandleFunc("/games/frame", gameHandler.GameFrame)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))

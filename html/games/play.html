@@ -1,8 +1,8 @@
 {{define "content"}}
-    <h1>Play</h1>
-    <br>
-    <iframe name="theIframe" src="about:blank" width="{{ .FrameWidth }}" height="{{ .FrameHeight }}"></iframe>
-    <br>
-    <br>
+    <h1>{{ .Name }}</h1>
     <a class="button" href="/games/frame?id={{ .Id }}" target="theIframe">Play!</a>
+    <img loading="lazy" width="400" height="320" src="/static/screenshots/{{ .Screenshot }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
+
+    <iframe id="theIframe" src="about:blank" width="{{ .FrameWidth }}" height="{{ .FrameHeight }}" style="display:none;" ></iframe>
+
 {{end}}

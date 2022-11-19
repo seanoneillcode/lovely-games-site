@@ -1,1 +1,0 @@
-INSERT INTO games (id, title, description, screenshot, game_file, frame_width, frame_height, created_at, updated_at) VALUES ('587sdnre86dh', 'Plutos Revenge', 'Blast away invaders from Pluto.', 'VbhV3vC5AWX39IVU.png','WSP2NcHciWvqZTa2.wasm',720, 960, '2022-11-11', '2022-11-11');
