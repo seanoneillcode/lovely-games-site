@@ -35,6 +35,22 @@ func NewRepository() *Repository {
 			Screenshot:       "screenshot.png",
 			HeaderImage:      "header.png",
 		},
+		{
+			Id:               "tactics",
+			Name:             "Fantasy Tactics",
+			ShortDescription: "Tough Tactics in a fantasy world.",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
+		},
+		{
+			Id:               "beautiful",
+			Name:             "Beautiful Castle Death Machine",
+			ShortDescription: "Smash blocks to build a matching row.",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
+		},
 	}}
 	for _, game := range r.games {
 		data, err := os.ReadFile("static/" + game.Id + "/" + game.DescriptionFile)
