@@ -2,6 +2,7 @@ package games
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"seanoneillcode/lovely-games-site/handlers/common"
 	"seanoneillcode/lovely-games-site/html"
@@ -44,13 +45,14 @@ func (h *GameHandler) GameFrame(w http.ResponseWriter, r *http.Request) {
 		common.HandleError(errors.New("game not found"), w, r, http.StatusBadRequest)
 		return
 	}
-	data := map[string]interface{}{
-		"Game": game,
-	}
-	err := h.templates.GetTemplate("games/frame.html").Execute(w, data)
-	if err != nil {
-		common.HandleError(err, w, r, http.StatusInternalServerError)
-	}
+	//data := map[string]interface{}{
+	//	"Game": game,
+	//}
+	http.ServeFile(w, r, fmt.Sprintf("static/%s/index.html", game.Id))
+	//err := h.templates.GetTemplate("static/frame.html").Execute(w, data)
+	//if err != nil {
+	//	common.HandleError(err, w, r, http.StatusInternalServerError)
+	//}
 }
 
 func (h *GameHandler) Play(w http.ResponseWriter, r *http.Request) {

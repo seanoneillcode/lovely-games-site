@@ -10,27 +10,39 @@ type Repository struct {
 }
 
 func NewRepository() *Repository {
-	r := &Repository{games: []*Game{}}
-	g := &Game{
-		Id:               "587sdnre86dh",
-		Name:             "Plutos Revenge",
-		ShortDescription: "Blast away invaders from Pluto.",
-		DescriptionFile:  "description.md",
-
-		Screenshot:   "screenshot.png",
-		HeaderImage:  "header.png",
-		ReleaseState: "Released",
-		GameFile:     "game.wasm",
-		FrameWidth:   720,
-		FrameHeight:  960,
+	r := &Repository{games: []*Game{
+		{
+			Id:               "587sdnre86dh",
+			Name:             "Plutos Revenge",
+			ShortDescription: "Blast away invaders from Pluto.",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
+			ReleaseState:     "Released",
+			GameFile:         "game.wasm",
+			FrameWidth:       720,
+			FrameHeight:      960,
+		},
+		{
+			Id:               "dh58sgt38dd4",
+			Name:             "Super B Saves The City",
+			ShortDescription: "Aliens are attacking the city, blast them away!",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
+			ReleaseState:     "Released",
+			GameFile:         "game.wasm",
+			FrameWidth:       720,
+			FrameHeight:      960,
+		},
+	}}
+	for _, game := range r.games {
+		data, err := os.ReadFile("static/" + game.Id + "/" + game.DescriptionFile)
+		if err != nil {
+			panic(err)
+		}
+		game.Description = string(markdown.ToHTML(data, nil, nil))
 	}
-	data, err := os.ReadFile("static/" + g.Id + "/" + g.DescriptionFile)
-	if err != nil {
-		panic(err)
-	}
-	g.Description = string(markdown.ToHTML(data, nil, nil))
-
-	r.games = append(r.games, g)
 
 	return r
 }
