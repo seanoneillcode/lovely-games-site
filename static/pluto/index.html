@@ -15,7 +15,7 @@
     }
 
     const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("/static/587sdnre86dh/game.wasm"), go.importObject).then(result => {
+    WebAssembly.instantiateStreaming(fetch("/static/pluto/game.wasm"), go.importObject).then(result => {
         go.run(result.instance);
     });
 </script>
