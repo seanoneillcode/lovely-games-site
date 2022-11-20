@@ -3,12 +3,16 @@
 
 {{ range $i, $j := .Games }}
 
-<article >
-
-    <h3>{{ .Name }}</h3>
-    <p>{{ .ShortDescription }}</p>
-    <a class="button view-button" href="/games/play?id={{ .Id }}">View</a>
-</article>
+<div class="game-list-entry" >
+    <a href="/games/play?id={{ .Id }}">
+        <img class="game-list-image" src="/static/{{ .Id }}/{{ .Screenshot }}" />
+    </a>
+    <div class="game-list-description">
+        <h3>{{ .Name }}</h3>
+        <p>{{ .ShortDescription }}</p>
+        <a class="button view-button" href="/games/play?id={{ .Id }}">View</a>
+    </div>
+</div>
 {{ end }}
 
 {{end}}
