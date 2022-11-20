@@ -12,28 +12,28 @@ type Repository struct {
 func NewRepository() *Repository {
 	r := &Repository{games: []*Game{
 		{
-			Id:               "587sdnre86dh",
+			Id:               "pluto",
 			Name:             "Plutos Revenge",
 			ShortDescription: "Blast away invaders from Pluto.",
 			DescriptionFile:  "description.md",
 			Screenshot:       "screenshot.png",
 			HeaderImage:      "header.png",
-			ReleaseState:     "Released",
-			GameFile:         "game.wasm",
-			FrameWidth:       720,
-			FrameHeight:      960,
 		},
 		{
-			Id:               "dh58sgt38dd4",
+			Id:               "superb",
 			Name:             "Super B Saves The City",
 			ShortDescription: "Aliens are attacking the city, blast them away!",
 			DescriptionFile:  "description.md",
 			Screenshot:       "screenshot.png",
 			HeaderImage:      "header.png",
-			ReleaseState:     "Released",
-			GameFile:         "game.wasm",
-			FrameWidth:       720,
-			FrameHeight:      960,
+		},
+		{
+			Id:               "chess",
+			Name:             "Super Fun Action Chess",
+			ShortDescription: "Realtime action chess",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
 		},
 	}}
 	for _, game := range r.games {

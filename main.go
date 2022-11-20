@@ -33,9 +33,9 @@ func main() {
 	http.HandleFunc("/", render.Index)
 	http.HandleFunc("/games", gameHandler.ListGames)
 	http.HandleFunc("/games/play", gameHandler.Play)
-	http.HandleFunc("/games/frame", gameHandler.GameFrame)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.Handle("/play/", http.StripPrefix("/play/", http.FileServer(http.Dir("static"))))
 
 	port := os.Getenv("PORT")
 	if port == "" {

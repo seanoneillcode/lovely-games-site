@@ -1,12 +1,10 @@
 {{define "content"}}
     {{with .Game}}
     <img loading="lazy" src="/static/{{ .Id }}/{{ .HeaderImage }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
-    <a class="button" href="/games/frame?id={{ .Id }}" target="theIframe">Play!</a>
+    <a class="button" href="/play/{{ .Id }}" target="theIframe">Play!</a>
     <img loading="lazy" width="50%" src="/static/{{ .Id }}/{{ .Screenshot }}" class="game-screenshot" alt="{{ .Name }} Screenshot" />
     <article>
         {{ .Description }}
     </article>
-
-    <iframe id="theIframe" src="about:blank" width="{{ .FrameWidth }}" height="{{ .FrameHeight }}" style="display:none;" ></iframe>
     {{end}}
 {{end}}
