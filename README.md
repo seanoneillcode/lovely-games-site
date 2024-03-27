@@ -1,3 +1,4 @@
+test
 # lovely-games-site
 A site for hosting and playing lovely games.
 
