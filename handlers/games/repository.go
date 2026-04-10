@@ -1,8 +1,9 @@
 package games
 
 import (
-	"github.com/gomarkdown/markdown"
 	"os"
+
+	"github.com/gomarkdown/markdown"
 )
 
 type Repository struct {
@@ -15,6 +16,14 @@ func NewRepository() *Repository {
 			Id:               "pluto",
 			Name:             "Plutos Revenge",
 			ShortDescription: "Blast away invaders from Pluto.",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
+		},
+		{
+			Id:               "notepractice",
+			Name:             "Note practice",
+			ShortDescription: "Practice reading music notes.",
 			DescriptionFile:  "description.md",
 			Screenshot:       "screenshot.png",
 			HeaderImage:      "header.png",
