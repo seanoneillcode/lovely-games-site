@@ -21,6 +21,14 @@ func NewRepository() *Repository {
 			HeaderImage:      "header.png",
 		},
 		{
+			Id:               "ceannasai",
+			Name:             "Ceannasai",
+			ShortDescription: "Command small units to victory in battle.",
+			DescriptionFile:  "description.md",
+			Screenshot:       "screenshot.png",
+			HeaderImage:      "header.png",
+		},
+		{
 			Id:               "notepractice",
 			Name:             "Note practice",
 			ShortDescription: "Practice reading music notes.",
